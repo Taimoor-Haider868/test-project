@@ -1,0 +1,11 @@
+<!-- app/views/shared/_errors.html.erb -->
+<% if object.errors.any? %>
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">Please fix the following errors:</h4>
+    <ul>
+      <% object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
