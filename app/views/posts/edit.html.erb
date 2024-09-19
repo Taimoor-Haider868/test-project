@@ -1,5 +1,6 @@
 <!-- app/views/posts/edit.html.erb -->
 <div class="container mt-4">
+  <%= link_to 'Back', posts_path, class: 'btn btn-secondary my-4' %>
   <h1>Edit Post</h1>
   <%= form_with(model: @post, local: true) do |form| %>
     <%= render 'error/error', object: @post %>
@@ -15,8 +16,7 @@
     </div>
 
     <div class="form-group">
-      <%= form.submit 'Update Post', class: 'btn btn-primary' %>
-      <%= link_to 'Cancel', posts_path, class: 'btn btn-secondary' %>
+      <%= form.submit 'Update Post', class: 'btn btn-primary mt-4' %>
     </div>
   <% end %>
 </div>

@@ -2,10 +2,12 @@
 
 one:
   body: MyText
+  user: one
   post: one
-  parent_id: 1
+  parent: one
 
 two:
   body: MyText
+  user: two
   post: two
-  parent_id: 1
+  parent: two

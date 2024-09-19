@@ -1,6 +1,10 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.includes(:user).all
+    if params[:query].present?
+      @posts = Post.joins(:user).where("posts.title ILIKE ? OR posts.body ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    else
+      @posts = Post.includes(:user).all
+    end
   end
 
   def new
@@ -30,6 +34,10 @@ class PostsController < ApplicationController
     end
   end
 
+  def show
+    @post = Post.find(params[:id])
+  end
+ 
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
@@ -39,7 +47,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :body)
+    params.require(:post).permit(:title, :body, :cover_image)
   end
 end
 
