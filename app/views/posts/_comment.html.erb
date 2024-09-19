@@ -1,0 +1,27 @@
+<div class="comment mb-4" id="comment-<%= comment.id %>">
+  <p><strong><%= comment.user.email %></strong> said:</p>
+  <p><%= comment.body %></p>
+
+  <%= link_to 'Reply', "#", class: "btn btn-link btn-sm", data: { toggle: "reply-form", parent_id: comment.id } %>
+
+  <!-- Reply form for the current comment -->
+  <div class="reply-form" id="reply-form-<%= comment.id %>" style="display:none;">
+    <%= form_with(model: [ @post, Comment.new(parent_id: comment.id) ], local: true) do |form| %>
+     <%= render 'error/error', object: @post %>
+      <div class="form-group">
+        <%= form.hidden_field :parent_id %>
+        <%= form.text_area :body, class: "form-control", placeholder: "Reply to this comment..." %>
+      </div>
+      <%= form.submit "Reply", class: "btn btn-primary mt-2" %>
+    <% end %>
+  </div>
+
+  <!-- Recursively render replies -->
+  <% if comment.replies.any? %>
+    <div class="replies ms-3">
+      <% comment.replies.each do |reply| %>
+        <%= render partial: 'comment', locals: { comment: reply } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

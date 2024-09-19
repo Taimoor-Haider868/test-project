@@ -10,7 +10,8 @@ class User < ApplicationRecord
          :confirmable
   
 
-# Associations
-has_many :posts
-has_many :comments, dependent: :destroy
+  # Associations
+  has_many :posts
+  has_many :comments
+  has_one_attached :profile_image
 end
