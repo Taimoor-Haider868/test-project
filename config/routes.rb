@@ -1,4 +1,7 @@
 # Rails.application.routes.draw do
+  # get 'likes/new'
+  # get 'likes/create'
+  # get 'likes/destroy'
   # get 'users/show'
 #   devise_for :users
 #   root 'home#index'
@@ -13,4 +16,9 @@ Rails.application.routes.draw do
   end
   resources :comments, only: [:destroy] # If you want to allow comment deletion
   resources :users, only: [:show] # Display user profile page
+
+
+  resources :posts do
+    resources :likes, only: [:create, :destroy] 
+  end
 end

@@ -5,4 +5,6 @@ class Post < ApplicationRecord
     validates :body, presence: true,length: {minimum:3, maximum:822}
 
     has_one_attached :cover_image
+    has_many :likes, dependent: :destroy
+    has_many :liked_users, through: :likes, source: :user
 end

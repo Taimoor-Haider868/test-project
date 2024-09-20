@@ -12,6 +12,30 @@
           <footer class="blockquote-footer mt-5">
             Created by <strong><%= @post.user.email %></strong> on <%= @post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
           </footer>
+          <% if current_user.liked_posts.include?(@post) %>
+           <%= link_to 'Unlike', post_like_path(@post), method: :delete, data: {
+                    turbo_method: :delete,
+                  } , class: "btn btn-primary" %>
+          <% else %>
+      <%= link_to 'Like', post_likes_path(@post), method: :post, data: {    turbo_method: :post,
+                   }, class: "btn btn-primary" %>
+           <% end %>
+        <% if @post.liked_users.count > 0 %>
+        <div data-controller="toggler">
+           <% @post.liked_users.each do |user| %>
+           <div data-toggler-show-class="show" class="hidden">
+           <button class="btn btn-primary" data-action="click->toggler#toggleVisibility">Click to toggle</button>
+           </div>
+         <% if user.profile_image.attached? %>
+          <%= image_tag user.profile_image, class: "rounded-circle", style: "width: 30px; height: 30px" %>
+         <% else %>
+         <%= image_tag 'https://static.vecteezy.com/system/resources/thumbnails/010/260/479/small/default-avatar-profile-icon-of-social-media-user-in-clipart-style-vector.jpg', class: "rounded-circle", style: "width: 30px; height: 30px" %> 
+         <% end %>
+        </div>
+  <% end %>
+<% end %>
+
+
         </div>
       </div>
 
