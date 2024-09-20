@@ -21,18 +21,23 @@
                    }, class: "btn btn-primary" %>
            <% end %>
         <% if @post.liked_users.count > 0 %>
-        <div data-controller="toggler">
-           <% @post.liked_users.each do |user| %>
-           <div data-toggler-show-class="show" class="hidden">
-           <button class="btn btn-primary" data-action="click->toggler#toggleVisibility">Click to toggle</button>
-           </div>
-         <% if user.profile_image.attached? %>
-          <%= image_tag user.profile_image, class: "rounded-circle", style: "width: 30px; height: 30px" %>
-         <% else %>
-         <%= image_tag 'https://static.vecteezy.com/system/resources/thumbnails/010/260/479/small/default-avatar-profile-icon-of-social-media-user-in-clipart-style-vector.jpg', class: "rounded-circle", style: "width: 30px; height: 30px" %> 
-         <% end %>
+        <div data-controller="toggler" data-toggler-show-class="show">
+          <div class="hidden">
+            <button class="btn btn-primary" data-action="click->toggler#toggleVisibility">Click to toggle</button>
+          </div>
+          <div data-toggler-target="usersContainer">
+            <% @post.liked_users.each_with_index do |user, index| %>
+              <div <%= "data-toggler-target=hiddenUser" if index > 0 %>>
+                <% if user.profile_image.attached? %>
+                  <%= image_tag user.profile_image, class: "rounded-circle", style: "width: 30px; height: 30px" %>
+                <% else %>
+                  <%= image_tag 'https://static.vecteezy.com/system/resources/thumbnails/010/260/479/small/default-avatar-profile-icon-of-social-media-user-in-clipart-style-vector.jpg', class: "rounded-circle", style: "width: 30px; height: 30px" %> 
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
-  <% end %>
+      
 <% end %>
 
 
